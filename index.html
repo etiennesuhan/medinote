@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -116,7 +117,7 @@
       position: absolute;
       inset: 0;
       background: radial-gradient(circle at 20% 10%, rgba(46, 115, 255, 0.15), transparent 28%),
-                  radial-gradient(circle at 80% 0%, rgba(84, 132, 255, 0.18), transparent 30%);
+        radial-gradient(circle at 80% 0%, rgba(84, 132, 255, 0.18), transparent 30%);
       z-index: 0;
     }
 
@@ -190,7 +191,7 @@
       position: absolute;
       inset: 0;
       background: radial-gradient(circle at 30% 30%, rgba(46, 115, 255, 0.18), transparent 38%),
-                  radial-gradient(circle at 80% 80%, rgba(46, 115, 255, 0.08), transparent 45%);
+        radial-gradient(circle at 80% 80%, rgba(46, 115, 255, 0.08), transparent 45%);
       filter: blur(8px);
       opacity: 0.8;
       pointer-events: none;
@@ -377,8 +378,13 @@
     }
 
     @keyframes shine {
-      from { transform: translateX(0); }
-      to { transform: translateX(60%); }
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(60%);
+      }
     }
 
     .contact {
@@ -411,6 +417,64 @@
       outline: none;
       border-color: rgba(46, 115, 255, 0.7);
       box-shadow: 0 0 0 4px rgba(46, 115, 255, 0.12);
+    }
+
+    .form-status {
+      margin-top: 12px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .form-status .status-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      position: relative;
+      background: var(--accent);
+      box-shadow: 0 8px 20px rgba(46, 115, 255, 0.25);
+      flex-shrink: 0;
+    }
+
+    .form-status .status-icon::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 3px;
+      width: 5px;
+      height: 9px;
+      border: 2px solid #fff;
+      border-top: 0;
+      border-left: 0;
+      transform: rotate(45deg);
+    }
+
+    .form-status.sending {
+      color: var(--muted);
+    }
+
+    .form-status.sending .status-icon {
+      background: var(--accent);
+    }
+
+    .form-status.success {
+      color: #0a8a4d;
+    }
+
+    .form-status.success .status-icon {
+      background: #0a8a4d;
+      box-shadow: 0 8px 22px rgba(10, 138, 77, 0.3);
+    }
+
+    .form-status.error {
+      color: #b3261e;
+    }
+
+    .form-status.error .status-icon {
+      background: #b3261e;
+      box-shadow: 0 8px 22px rgba(179, 38, 30, 0.3);
     }
 
     footer {
@@ -451,9 +515,11 @@
       .hero-inner {
         grid-template-columns: 1fr;
       }
+
       .hero {
         padding: 42px 0 60px;
       }
+
       h1 {
         font-size: clamp(2.3rem, 6vw, 3rem);
       }
@@ -464,14 +530,17 @@
         flex-direction: column;
         align-items: flex-start;
       }
+
       .cta-row {
         width: 100%;
       }
+
       .btn,
       input[type="email"] {
         width: 100%;
         text-align: center;
       }
+
       .grid-lines::before,
       .grid-lines::after {
         background-size: 90px 90px;
@@ -479,6 +548,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="page grid-lines">
     <div class="container">
@@ -496,7 +566,8 @@
         <div class="hero-inner">
           <div class="reveal visible">
             <h1>MediNote – Die digitale Gesundheitsakte der Zukunft</h1>
-            <p class="subhead">Eine Plattform. Zwei Perspektiven. Perfekt verbunden. Automatisierte Dokumentation für Praxen und ein persönlicher Gesundheits-Wallet für Patientinnen und Patienten.</p>
+            <p class="subhead">Eine Plattform. Zwei Perspektiven. Perfekt verbunden. Automatisierte Dokumentation für
+              Praxen und ein persönlicher Gesundheits-Wallet für Patientinnen und Patienten.</p>
             <div class="cta-row">
               <button class="btn btn-primary" id="cta-hero">Interesse vormerken</button>
               <button class="btn btn-ghost">Mehr erfahren</button>
@@ -526,7 +597,8 @@
 
       <section class="reveal">
         <h2 class="section-title">Für Ärztinnen & Praxen</h2>
-        <p class="section-sub">Vereinfachen Sie Ihren Praxisalltag mit automatischer Dokumentation, klaren Workflows und sicherer Speicherung – entwickelt für moderne Teams.</p>
+        <p class="section-sub">Vereinfachen Sie Ihren Praxisalltag mit automatischer Dokumentation, klaren Workflows und
+          sicherer Speicherung – entwickelt für moderne Teams.</p>
         <div class="value-grid">
           <div class="card">
             <div class="icon">A</div>
@@ -548,7 +620,8 @@
 
       <section class="reveal">
         <h2 class="section-title">Für Patientinnen & Patienten</h2>
-        <p class="section-sub">Behält den Überblick über Gesundheitsdaten, Arztbesuche und Empfehlungen – immer erreichbar, immer aktuell.</p>
+        <p class="section-sub">Behält den Überblick über Gesundheitsdaten, Arztbesuche und Empfehlungen – immer
+          erreichbar, immer aktuell.</p>
         <div class="value-grid">
           <div class="card">
             <div class="icon">G</div>
@@ -570,18 +643,21 @@
 
       <section class="reveal">
         <h2 class="section-title">Das Produkt in zwei Ansichten</h2>
-        <p class="section-sub">MediNote verbindet Praxis-Workflows mit dem persönlichen Gesundheits-Wallet. Minimalistisches Interface, klare Prioritäten, Apple-inspirierte Ästhetik.</p>
+        <p class="section-sub">MediNote verbindet Praxis-Workflows mit dem persönlichen Gesundheits-Wallet.
+          Minimalistisches Interface, klare Prioritäten, Apple-inspirierte Ästhetik.</p>
         <div class="product-grid">
           <div class="product-card">
             <div class="tag">Praxis-Ansicht</div>
             <h3>MediNote für Praxen</h3>
-            <p>Automatische Dokumentation, strukturierte Patientendossiers und ein Frontdesk-Flow mit QR-Code-Check-In.</p>
+            <p>Automatische Dokumentation, strukturierte Patientendossiers und ein Frontdesk-Flow mit QR-Code-Check-In.
+            </p>
             <div class="media" aria-label="Produktvisualisierung Praxen"></div>
           </div>
           <div class="product-card">
             <div class="tag">Patienten-Ansicht</div>
             <h3>MediNote für Patienten</h3>
-            <p>Persönlicher Gesundheits-Wallet, Befunde, Arztbesuche und Empfehlungen – sicher gespeichert und sofort griffbereit.</p>
+            <p>Persönlicher Gesundheits-Wallet, Befunde, Arztbesuche und Empfehlungen – sicher gespeichert und sofort
+              griffbereit.</p>
             <div class="media" aria-label="Produktvisualisierung Patienten"></div>
           </div>
         </div>
@@ -589,17 +665,21 @@
 
       <section class="contact reveal">
         <h2 class="section-title">Kontakt & Validierung</h2>
-        <p class="section-sub">MediNote befindet sich aktuell in Entwicklung. Trage dich ein, um benachrichtigt zu werden.</p>
-        <form id="notify-form">
+        <p class="section-sub">MediNote befindet sich aktuell in Entwicklung. Trage dich ein, um benachrichtigt zu
+          werden.</p>
+        <form id="notify-form" action="https://formsubmit.co/info.medinote@gmail.com" method="POST">
+          <input type="hidden" name="_captcha" value="false">
           <input type="email" name="email" placeholder="E-Mail-Adresse" required aria-label="E-Mail-Adresse">
           <button class="btn btn-primary" type="submit">Interesse vormerken</button>
         </form>
-        <div id="form-message" class="section-sub" style="margin-top:12px; display:none; color:var(--ink); font-weight:600;"></div>
+        <div id="form-message" class="form-status" aria-live="polite"></div>
       </section>
 
       <footer>
         <div class="footer-row">
-          <div class="brand"><div class="brand-mark"></div>MediNote</div>
+          <div class="brand">
+            <div class="brand-mark"></div>MediNote
+          </div>
           <div>Datenschutz · <a href="mailto:info.medinote@gmail.com">info.medinote@gmail.com</a></div>
         </div>
       </footer>
@@ -618,12 +698,39 @@
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    document.getElementById('notify-form').addEventListener('submit', (e) => {
+    const form = document.getElementById('notify-form');
+    const message = document.getElementById('form-message');
+    const submitBtn = form.querySelector('button[type=\"submit\"]');
+
+    const setStatus = (variant, text) => {
+      message.className = `form-status ${variant}`.trim();
+      message.innerHTML = `<span class=\"status-icon\" aria-hidden=\"true\"></span><span>${text}</span>`;
+      message.style.display = 'flex';
+    };
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const message = document.getElementById('form-message');
-      message.textContent = 'Danke! Wir benachrichtigen dich, sobald MediNote verfügbar ist.';
-      message.style.display = 'block';
-      e.target.reset();
+      setStatus('sending', 'Wird gesendet ...');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Wird gesendet...';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        });
+
+        if (!response.ok) throw new Error('Request failed');
+
+        setStatus('success', 'Danke! Wir melden uns, sobald MediNote verfügbar ist.');
+        form.reset();
+      } catch (error) {
+        setStatus('error', 'Da ist etwas schiefgelaufen. Bitte versuche es später erneut.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Interesse vormerken';
+      }
     });
 
     document.getElementById('cta-hero').addEventListener('click', () => {
@@ -631,4 +738,5 @@
     });
   </script>
 </body>
+
 </html>
