@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediNote – Digitale Gesundheitsakte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --ink: #0b1224;
+      --muted: #4f5a73;
+      --accent: #2e73ff;
+      --accent-soft: #e8f0ff;
+      --line: rgba(15, 24, 40, 0.08);
+      --shadow: 0 14px 50px rgba(14, 32, 68, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .grid-lines::before,
+    .grid-lines::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 24%, var(--line) 25%, var(--line) 26%, transparent 27%),
+        linear-gradient(transparent 24%, var(--line) 25%, var(--line) 26%, transparent 27%);
+      background-size: 120px 120px;
+      opacity: 0.35;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+
+    .grid-lines::after {
+      filter: blur(1px);
+      opacity: 0.15;
+    }
+
+    .container {
+      width: min(1120px, 92vw);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 22px 0 12px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .brand-mark {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, var(--accent), #6aa8ff);
+      box-shadow: 0 8px 20px rgba(46, 115, 255, 0.35);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(46, 115, 255, 0.08);
+      color: var(--ink);
+      font-weight: 500;
+      border: 1px solid rgba(46, 115, 255, 0.12);
+    }
+
+    .hero {
+      position: relative;
+      padding: 56px 0 70px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 10%, rgba(46, 115, 255, 0.15), transparent 28%),
+                  radial-gradient(circle at 80% 0%, rgba(84, 132, 255, 0.18), transparent 30%);
+      z-index: 0;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 4vw, 3.6rem);
+      margin: 0 0 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .subhead {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin: 0 0 28px;
+      max-width: 520px;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .btn-primary {
+      padding: 14px 20px;
+      border-radius: 12px;
+      background: linear-gradient(120deg, var(--accent), #5e9dff);
+      color: #fff;
+      box-shadow: 0 18px 45px rgba(46, 115, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 55px rgba(46, 115, 255, 0.4);
+    }
+
+    .btn-ghost {
+      padding: 12px 14px;
+      color: var(--ink);
+      background: rgba(12, 18, 36, 0.04);
+      border-radius: 12px;
+      border: 1px solid rgba(12, 18, 36, 0.08);
+    }
+
+    .hero-card {
+      background: var(--card);
+      border-radius: calc(var(--radius) + 4px);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(12, 18, 36, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(46, 115, 255, 0.18), transparent 38%),
+                  radial-gradient(circle at 80% 80%, rgba(46, 115, 255, 0.08), transparent 45%);
+      filter: blur(8px);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .floating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(46, 115, 255, 0.08);
+      color: var(--ink);
+      font-weight: 600;
+      position: relative;
+    }
+
+    .floating-badge span {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: var(--card);
+      box-shadow: 0 12px 30px rgba(46, 115, 255, 0.25);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .stat {
+      background: rgba(12, 18, 36, 0.02);
+      border-radius: 14px;
+      padding: 14px;
+      border: 1px solid rgba(12, 18, 36, 0.05);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.25rem;
+      margin-bottom: 4px;
+    }
+
+    section {
+      padding: 48px 0;
+    }
+
+    .section-title {
+      font-size: 1.9rem;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      margin: 0 0 28px;
+      max-width: 640px;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      border: 1px solid rgba(12, 18, 36, 0.06);
+      box-shadow: 0 10px 35px rgba(12, 18, 36, 0.06);
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 45px rgba(12, 18, 36, 0.08);
+      border-color: rgba(46, 115, 255, 0.25);
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 25px rgba(46, 115, 255, 0.16);
+    }
+
+    .card h4 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .product-card {
+      border-radius: calc(var(--radius) + 4px);
+      padding: 20px;
+      background: linear-gradient(145deg, #ffffff, #f4f7fb);
+      border: 1px solid rgba(12, 18, 36, 0.06);
+      box-shadow: 0 18px 45px rgba(12, 18, 36, 0.08);
+      transition: transform 200ms ease, box-shadow 200ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 55px rgba(12, 18, 36, 0.12);
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(46, 115, 255, 0.14), transparent 34%);
+      pointer-events: none;
+    }
+
+    .product-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .product-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(12, 18, 36, 0.04);
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+
+    .media {
+      height: 180px;
+      border-radius: var(--radius);
+      background: linear-gradient(120deg, #d9e6ff, #f4f7fb);
+      border: 1px dashed rgba(12, 18, 36, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .media::after {
+      content: '';
+      position: absolute;
+      width: 160%;
+      height: 100%;
+      top: 0;
+      left: -60%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      animation: shine 4s linear infinite;
+    }
+
+    @keyframes shine {
+      from { transform: translateX(0); }
+      to { transform: translateX(60%); }
+    }
+
+    .contact {
+      background: var(--card);
+      border-radius: calc(var(--radius) + 6px);
+      padding: 26px;
+      border: 1px solid rgba(12, 18, 36, 0.06);
+      box-shadow: 0 16px 50px rgba(12, 18, 36, 0.08);
+    }
+
+    form {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    input[type="email"] {
+      flex: 1;
+      min-width: 220px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(12, 18, 36, 0.12);
+      background: #f9fbff;
+      font-size: 1rem;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
+    }
+
+    input[type="email"]:focus {
+      outline: none;
+      border-color: rgba(46, 115, 255, 0.7);
+      box-shadow: 0 0 0 4px rgba(46, 115, 255, 0.12);
+    }
+
+    footer {
+      padding: 30px 0 50px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 920px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        padding: 42px 0 60px;
+      }
+      h1 {
+        font-size: clamp(2.3rem, 6vw, 3rem);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .cta-row {
+        width: 100%;
+      }
+      .btn,
+      input[type="email"] {
+        width: 100%;
+        text-align: center;
+      }
+      .grid-lines::before,
+      .grid-lines::after {
+        background-size: 90px 90px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page grid-lines">
+    <div class="container">
+      <header>
+        <div class="topbar">
+          <div class="brand">
+            <div class="brand-mark"></div>
+            MediNote
+          </div>
+          <div class="pill">Eine Plattform · Zwei Perspektiven</div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="reveal visible">
+            <h1>MediNote – Die digitale Gesundheitsakte der Zukunft</h1>
+            <p class="subhead">Eine Plattform. Zwei Perspektiven. Perfekt verbunden. Automatisierte Dokumentation für Praxen und ein persönlicher Gesundheits-Wallet für Patientinnen und Patienten.</p>
+            <div class="cta-row">
+              <button class="btn btn-primary" id="cta-hero">Interesse vormerken</button>
+              <button class="btn btn-ghost">Mehr erfahren</button>
+            </div>
+          </div>
+          <div class="hero-card reveal">
+            <div class="floating-badge">
+              <span>AI</span> Intelligente Erfassung & Strukturierung
+            </div>
+            <div class="stat-grid">
+              <div class="stat">
+                <strong>Automatische Transkripte</strong>
+                <small>Besuchsnotizen ohne Tippen – direkt in der Akte.</small>
+              </div>
+              <div class="stat">
+                <strong>Patienten-Wallet</strong>
+                <small>Alle Befunde und Arztbesuche in einer App.</small>
+              </div>
+              <div class="stat">
+                <strong>QR-Code Check-In</strong>
+                <small>Schneller Empfang, weniger Wartezeit, sichere Zuordnung.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="reveal">
+        <h2 class="section-title">Für Ärztinnen & Praxen</h2>
+        <p class="section-sub">Vereinfachen Sie Ihren Praxisalltag mit automatischer Dokumentation, klaren Workflows und sicherer Speicherung – entwickelt für moderne Teams.</p>
+        <div class="value-grid">
+          <div class="card">
+            <div class="icon">A</div>
+            <h4>Automatische Transkription & Dokumentation</h4>
+            <p>Konsultationen werden live erfasst, sauber strukturiert und können sofort freigegeben werden.</p>
+          </div>
+          <div class="card">
+            <div class="icon">Q</div>
+            <h4>Patienten-Management mit QR-Code-Check-In</h4>
+            <p>Check-In am Empfang, sofortige Zuordnung zur Akte, klare Abläufe im Team.</p>
+          </div>
+          <div class="card">
+            <div class="icon">S</div>
+            <h4>Sichere Speicherung & Export</h4>
+            <p>Verschlüsselte Datenhaltung mit Export in Standardformaten für Weitergabe und Abrechnung.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="reveal">
+        <h2 class="section-title">Für Patientinnen & Patienten</h2>
+        <p class="section-sub">Behält den Überblick über Gesundheitsdaten, Arztbesuche und Empfehlungen – immer erreichbar, immer aktuell.</p>
+        <div class="value-grid">
+          <div class="card">
+            <div class="icon">G</div>
+            <h4>Alle Gesundheitsdaten in einer App</h4>
+            <p>Dokumente, Rezepte, Impfungen – zentral gespeichert und schnell auffindbar.</p>
+          </div>
+          <div class="card">
+            <div class="icon">B</div>
+            <h4>Übersicht über Befunde & Arztbesuche</h4>
+            <p>Chronologische Timeline mit wichtigen Details und Erinnerungen.</p>
+          </div>
+          <div class="card">
+            <div class="icon">R</div>
+            <h4>Intelligente Empfehlungen</h4>
+            <p>Hinweise zu Vorsorge, Medikamenteneinnahme und anstehenden Terminen.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="reveal">
+        <h2 class="section-title">Das Produkt in zwei Ansichten</h2>
+        <p class="section-sub">MediNote verbindet Praxis-Workflows mit dem persönlichen Gesundheits-Wallet. Minimalistisches Interface, klare Prioritäten, Apple-inspirierte Ästhetik.</p>
+        <div class="product-grid">
+          <div class="product-card">
+            <div class="tag">Praxis-Ansicht</div>
+            <h3>MediNote für Praxen</h3>
+            <p>Automatische Dokumentation, strukturierte Patientendossiers und ein Frontdesk-Flow mit QR-Code-Check-In.</p>
+            <div class="media" aria-label="Produktvisualisierung Praxen"></div>
+          </div>
+          <div class="product-card">
+            <div class="tag">Patienten-Ansicht</div>
+            <h3>MediNote für Patienten</h3>
+            <p>Persönlicher Gesundheits-Wallet, Befunde, Arztbesuche und Empfehlungen – sicher gespeichert und sofort griffbereit.</p>
+            <div class="media" aria-label="Produktvisualisierung Patienten"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact reveal">
+        <h2 class="section-title">Kontakt & Validierung</h2>
+        <p class="section-sub">MediNote befindet sich aktuell in Entwicklung. Trage dich ein, um benachrichtigt zu werden.</p>
+        <form id="notify-form">
+          <input type="email" name="email" placeholder="E-Mail-Adresse" required aria-label="E-Mail-Adresse">
+          <button class="btn btn-primary" type="submit">Interesse vormerken</button>
+        </form>
+        <div id="form-message" class="section-sub" style="margin-top:12px; display:none; color:var(--ink); font-weight:600;"></div>
+      </section>
+
+      <footer>
+        <div class="footer-row">
+          <div class="brand"><div class="brand-mark"></div>MediNote</div>
+          <div>Datenschutz · <a href="mailto:info.medinote@gmail.com">info.medinote@gmail.com</a></div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.getElementById('notify-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = document.getElementById('form-message');
+      message.textContent = 'Danke! Wir benachrichtigen dich, sobald MediNote verfügbar ist.';
+      message.style.display = 'block';
+      e.target.reset();
+    });
+
+    document.getElementById('cta-hero').addEventListener('click', () => {
+      document.getElementById('notify-form').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
