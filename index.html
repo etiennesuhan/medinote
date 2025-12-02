@@ -14,21 +14,23 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediNote – Digitale Gesundheitsakte</title>
+  <title>MediNote &ndash; Digitale Gesundheitsakte</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f7f9fc;
+      --bg: #f6f8fb;
+      --bg-strong: #e8eefb;
       --card: #ffffff;
-      --ink: #0b1224;
-      --muted: #4f5a73;
-      --accent: #2e73ff;
-      --accent-soft: #e8f0ff;
-      --line: rgba(15, 24, 40, 0.08);
-      --shadow: 0 14px 50px rgba(14, 32, 68, 0.08);
-      --radius: 18px;
+      --ink: #0c1426;
+      --muted: #56627a;
+      --accent: #2d7cf8;
+      --accent-2: #76d0ff;
+      --accent-soft: #e6f1ff;
+      --line: rgba(12, 20, 38, 0.08);
+      --shadow: 0 18px 60px rgba(10, 25, 55, 0.12);
+      --radius: 20px;
     }
 
     * {
@@ -37,8 +39,11 @@
 
     body {
       margin: 0;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
+      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(45, 124, 248, 0.12), transparent 32%),
+        radial-gradient(circle at 82% 8%, rgba(118, 208, 255, 0.12), transparent 30%),
+        linear-gradient(180deg, #f7f9fc 0%, #eef3ff 100%);
       color: var(--ink);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
@@ -46,37 +51,49 @@
 
     .page {
       position: relative;
-      overflow-x: hidden;
+      overflow: hidden;
+      min-height: 100vh;
+    }
+
+    .page::after {
+      content: '';
+      position: absolute;
+      inset: 8% 8% auto;
+      height: 320px;
+      background: radial-gradient(120% 100% at 50% 0%, rgba(12, 20, 38, 0.12), transparent);
+      filter: blur(70px);
+      opacity: 0.5;
+      pointer-events: none;
     }
 
     .grid-lines::before,
     .grid-lines::after {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: absolute;
+      inset: -60px;
       background:
-        linear-gradient(90deg, transparent 24%, var(--line) 25%, var(--line) 26%, transparent 27%),
-        linear-gradient(transparent 24%, var(--line) 25%, var(--line) 26%, transparent 27%);
-      background-size: 120px 120px;
-      opacity: 0.35;
+        linear-gradient(90deg, rgba(12, 20, 38, 0.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(12, 20, 38, 0.08) 1px, transparent 1px);
+      background-size: 160px 160px;
+      opacity: 0.12;
       pointer-events: none;
-      mix-blend-mode: multiply;
+      mix-blend-mode: soft-light;
     }
 
     .grid-lines::after {
       filter: blur(1px);
-      opacity: 0.15;
+      opacity: 0.08;
     }
 
     .container {
-      width: min(1120px, 92vw);
+      width: min(1180px, 92vw);
       margin: 0 auto;
       position: relative;
       z-index: 1;
     }
 
     header {
-      padding: 22px 0 12px;
+      padding: 26px 0 12px;
     }
 
     .topbar {
@@ -84,6 +101,12 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.78);
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 32px rgba(12, 20, 38, 0.08);
+      backdrop-filter: blur(12px);
     }
 
     .brand {
@@ -91,64 +114,79 @@
       align-items: center;
       gap: 12px;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
       text-transform: uppercase;
       font-size: 13px;
       color: var(--ink);
+      font-family: 'Space Grotesk', 'Manrope', system-ui, sans-serif;
     }
 
     .brand-mark {
-      width: 12px;
-      height: 12px;
-      border-radius: 4px;
-      background: linear-gradient(135deg, var(--accent), #6aa8ff);
-      box-shadow: 0 8px 20px rgba(46, 115, 255, 0.35);
+      width: 14px;
+      height: 14px;
+      border-radius: 5px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 24px rgba(45, 124, 248, 0.32);
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 10px 14px;
+      padding: 10px 16px;
       border-radius: 999px;
-      background: rgba(46, 115, 255, 0.08);
+      background: linear-gradient(120deg, rgba(45, 124, 248, 0.12), rgba(118, 208, 255, 0.12));
       color: var(--ink);
-      font-weight: 500;
-      border: 1px solid rgba(46, 115, 255, 0.12);
+      font-weight: 600;
+      border: 1px solid rgba(15, 163, 177, 0.18);
     }
 
     .hero {
       position: relative;
-      padding: 56px 0 70px;
+      padding: 78px 0 90px;
     }
 
     .hero::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 20% 10%, rgba(46, 115, 255, 0.15), transparent 28%),
-        radial-gradient(circle at 80% 0%, rgba(84, 132, 255, 0.18), transparent 30%);
-      z-index: 0;
+      inset: 12% 6% auto;
+      height: 420px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.68));
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 22px 70px rgba(12, 20, 38, 0.08);
+      filter: blur(8px);
+      opacity: 0.9;
     }
 
     .hero-inner {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 42px;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 48px;
       align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Space Grotesk', 'Manrope', system-ui, sans-serif;
     }
 
     h1 {
-      font-size: clamp(2.6rem, 4vw, 3.6rem);
-      margin: 0 0 18px;
+      font-size: clamp(2.7rem, 4vw, 3.9rem);
+      margin: 0 0 20px;
       letter-spacing: -0.03em;
+      line-height: 1.05;
     }
 
     .subhead {
       font-size: 1.1rem;
       color: var(--muted);
-      margin: 0 0 28px;
-      max-width: 520px;
+      margin: 0 0 30px;
+      max-width: 540px;
     }
 
     .cta-row {
@@ -161,49 +199,57 @@
     .btn {
       border: none;
       cursor: pointer;
-      font-weight: 600;
-      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      font-weight: 700;
+      font-size: 0.98rem;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, color 160ms ease;
     }
 
     .btn-primary {
       padding: 14px 20px;
-      border-radius: 12px;
-      background: linear-gradient(120deg, var(--accent), #5e9dff);
-      color: #fff;
-      box-shadow: 0 18px 45px rgba(46, 115, 255, 0.35);
+      border-radius: 14px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #f7fbff;
+      box-shadow: 0 18px 45px rgba(45, 124, 248, 0.35);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 22px 55px rgba(46, 115, 255, 0.4);
+      box-shadow: 0 22px 55px rgba(45, 124, 248, 0.42);
     }
 
     .btn-ghost {
       padding: 12px 14px;
       color: var(--ink);
       background: rgba(12, 18, 36, 0.04);
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid rgba(12, 18, 36, 0.08);
     }
 
+    .btn-ghost:hover {
+      background: rgba(12, 18, 36, 0.07);
+      transform: translateY(-1px);
+    }
+
     .hero-card {
-      background: var(--card);
-      border-radius: calc(var(--radius) + 4px);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.82));
+      border-radius: calc(var(--radius) + 6px);
       padding: 24px;
       box-shadow: var(--shadow);
-      border: 1px solid rgba(12, 18, 36, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.65);
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(12px);
     }
 
     .hero-card::after {
       content: '';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 30% 30%, rgba(46, 115, 255, 0.18), transparent 38%),
-        radial-gradient(circle at 80% 80%, rgba(46, 115, 255, 0.08), transparent 45%);
+      inset: -30% -10% auto auto;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(45, 124, 248, 0.26), transparent 60%);
       filter: blur(8px);
-      opacity: 0.8;
+      opacity: 0.9;
       pointer-events: none;
     }
 
@@ -213,28 +259,31 @@
       gap: 10px;
       padding: 12px 14px;
       border-radius: 14px;
-      background: rgba(46, 115, 255, 0.08);
+      background: linear-gradient(120deg, rgba(45, 124, 248, 0.16), rgba(118, 208, 255, 0.16));
       color: var(--ink);
-      font-weight: 600;
+      font-weight: 700;
       position: relative;
+      border: 1px solid rgba(45, 124, 248, 0.18);
+      box-shadow: 0 16px 40px rgba(45, 124, 248, 0.18);
     }
 
     .floating-badge span {
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 12px;
       background: var(--card);
-      box-shadow: 0 12px 30px rgba(46, 115, 255, 0.25);
+      box-shadow: 0 12px 30px rgba(45, 124, 248, 0.22);
       color: var(--accent);
-      font-weight: 700;
+      font-weight: 800;
+      letter-spacing: 0.04em;
     }
 
     .stat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 16px;
       margin-top: 22px;
     }
@@ -244,89 +293,126 @@
       border-radius: 14px;
       padding: 14px;
       border: 1px solid rgba(12, 18, 36, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(45, 124, 248, 0.08), transparent 40%);
+      opacity: 0.8;
+      pointer-events: none;
     }
 
     .stat strong {
       display: block;
-      font-size: 1.25rem;
-      margin-bottom: 4px;
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat small {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
     }
 
     section {
-      padding: 48px 0;
+      padding: 72px 0 64px;
+      position: relative;
+      z-index: 1;
     }
 
     .section-title {
-      font-size: 1.9rem;
-      margin: 0 0 16px;
+      font-size: 2rem;
+      margin: 0 0 12px;
       letter-spacing: -0.02em;
+      line-height: 1.2;
     }
 
     .section-sub {
       color: var(--muted);
-      margin: 0 0 28px;
+      margin: 0 0 32px;
       max-width: 640px;
     }
 
     .value-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 18px;
     }
 
     .card {
-      background: var(--card);
+      background: linear-gradient(145deg, #ffffff, #f3f6fb);
       border-radius: var(--radius);
-      padding: 18px;
+      padding: 20px;
       border: 1px solid rgba(12, 18, 36, 0.06);
-      box-shadow: 0 10px 35px rgba(12, 18, 36, 0.06);
+      box-shadow: 0 12px 40px rgba(12, 18, 36, 0.08);
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
       position: relative;
       overflow: hidden;
     }
 
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(45, 124, 248, 0.12), transparent 38%);
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 45px rgba(12, 18, 36, 0.08);
-      border-color: rgba(46, 115, 255, 0.25);
+      transform: translateY(-5px);
+      box-shadow: 0 18px 50px rgba(12, 18, 36, 0.1);
+      border-color: rgba(15, 163, 177, 0.22);
     }
 
     .icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: var(--accent-soft);
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent);
-      font-weight: 700;
+      color: #0c1426;
+      font-weight: 800;
       margin-bottom: 14px;
-      box-shadow: 0 10px 25px rgba(46, 115, 255, 0.16);
+      box-shadow: 0 12px 28px rgba(45, 124, 248, 0.18);
+      position: relative;
+      z-index: 1;
     }
 
     .card h4 {
-      margin: 0 0 8px;
-      font-size: 1.05rem;
+      margin: 0 0 10px;
+      font-size: 1.08rem;
+      position: relative;
+      z-index: 1;
     }
 
     .card p {
       margin: 0;
       color: var(--muted);
+      position: relative;
+      z-index: 1;
     }
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 22px;
     }
 
     .product-card {
-      border-radius: calc(var(--radius) + 4px);
-      padding: 20px;
+      border-radius: calc(var(--radius) + 6px);
+      padding: 22px;
       background: linear-gradient(145deg, #ffffff, #f4f7fb);
-      border: 1px solid rgba(12, 18, 36, 0.06);
-      box-shadow: 0 18px 45px rgba(12, 18, 36, 0.08);
+      border: 1px solid rgba(12, 18, 36, 0.08);
+      box-shadow: 0 18px 50px rgba(12, 18, 36, 0.1);
       transition: transform 200ms ease, box-shadow 200ms ease;
       position: relative;
       overflow: hidden;
@@ -334,20 +420,20 @@
 
     .product-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 24px 55px rgba(12, 18, 36, 0.12);
+      box-shadow: 0 24px 60px rgba(12, 18, 36, 0.12);
     }
 
     .product-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 20% 20%, rgba(46, 115, 255, 0.14), transparent 34%);
+      background: radial-gradient(circle at 20% 20%, rgba(45, 124, 248, 0.12), transparent 34%);
       pointer-events: none;
     }
 
     .product-card h3 {
       margin: 0 0 8px;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       letter-spacing: -0.01em;
     }
 
@@ -358,22 +444,35 @@
 
     .tag {
       display: inline-flex;
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 999px;
       background: rgba(12, 18, 36, 0.04);
       color: var(--ink);
-      font-weight: 600;
-      font-size: 0.85rem;
-      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+      border: 1px solid rgba(12, 18, 36, 0.08);
     }
 
     .media {
-      height: 180px;
+      height: 190px;
       border-radius: var(--radius);
-      background: linear-gradient(120deg, #d9e6ff, #f4f7fb);
+      background: linear-gradient(120deg, #e3f0ff, #eef7ff);
       border: 1px dashed rgba(12, 18, 36, 0.1);
       position: relative;
       overflow: hidden;
+    }
+
+    .media::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 14px;
+      background:
+        linear-gradient(90deg, rgba(12, 18, 36, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(12, 18, 36, 0.05) 1px, transparent 1px);
+      background-size: 36px 36px;
+      opacity: 0.6;
     }
 
     .media::after {
@@ -398,11 +497,12 @@
     }
 
     .contact {
-      background: var(--card);
-      border-radius: calc(var(--radius) + 6px);
-      padding: 26px;
-      border: 1px solid rgba(12, 18, 36, 0.06);
-      box-shadow: 0 16px 50px rgba(12, 18, 36, 0.08);
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: calc(var(--radius) + 8px);
+      padding: 28px;
+      border: 1px solid rgba(45, 124, 248, 0.14);
+      box-shadow: 0 20px 60px rgba(12, 18, 36, 0.12);
+      backdrop-filter: blur(12px);
     }
 
     form {
@@ -414,19 +514,19 @@
 
     input[type="email"] {
       flex: 1;
-      min-width: 220px;
+      min-width: 240px;
       padding: 14px 16px;
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid rgba(12, 18, 36, 0.12);
-      background: #f9fbff;
+      background: #fff;
       font-size: 1rem;
       transition: border-color 140ms ease, box-shadow 140ms ease;
     }
 
     input[type="email"]:focus {
       outline: none;
-      border-color: rgba(46, 115, 255, 0.7);
-      box-shadow: 0 0 0 4px rgba(46, 115, 255, 0.12);
+      border-color: rgba(45, 124, 248, 0.7);
+      box-shadow: 0 0 0 4px rgba(45, 124, 248, 0.15);
     }
 
     .form-status {
@@ -435,7 +535,7 @@
       align-items: center;
       gap: 8px;
       color: var(--ink);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .form-status .status-icon {
@@ -444,7 +544,7 @@
       border-radius: 50%;
       position: relative;
       background: var(--accent);
-      box-shadow: 0 8px 20px rgba(46, 115, 255, 0.25);
+      box-shadow: 0 8px 20px rgba(45, 124, 248, 0.25);
       flex-shrink: 0;
     }
 
@@ -488,7 +588,7 @@
     }
 
     footer {
-      padding: 30px 0 50px;
+      padding: 34px 0 50px;
       color: var(--muted);
       font-size: 0.95rem;
     }
@@ -499,6 +599,8 @@
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
     }
 
     a {
@@ -527,20 +629,20 @@
       }
 
       .hero {
-        padding: 42px 0 60px;
+        padding: 58px 0 72px;
       }
 
       h1 {
-        font-size: clamp(2.3rem, 6vw, 3rem);
+        font-size: clamp(2.3rem, 6vw, 3.3rem);
       }
-    }
 
-    @media (max-width: 640px) {
       .topbar {
         flex-direction: column;
         align-items: flex-start;
       }
+    }
 
+    @media (max-width: 640px) {
       .cta-row {
         width: 100%;
       }
@@ -553,7 +655,7 @@
 
       .grid-lines::before,
       .grid-lines::after {
-        background-size: 90px 90px;
+        background-size: 120px 120px;
       }
     }
   </style>
@@ -568,29 +670,28 @@
             <div class="brand-mark"></div>
             MediNote
           </div>
-          <div class="pill">Eine Plattform · Zwei Perspektiven</div>
+          <div class="pill">Eine Plattform &ndash; Zwei Perspektiven</div>
         </div>
       </header>
 
       <section class="hero">
         <div class="hero-inner">
           <div class="reveal visible">
-            <h1>MediNote – Die digitale Gesundheitsakte der Zukunft</h1>
-            <p class="subhead">Eine Plattform. Zwei Perspektiven. Perfekt verbunden. Automatisierte Dokumentation für
-              Praxen und ein persönlicher Gesundheits-Wallet für Patientinnen und Patienten.</p>
+            <h1>MediNote &ndash; Die digitale Gesundheitsakte der Zukunft</h1>
+            <p class="subhead">Eine Plattform. Zwei Perspektiven. Perfekt verbunden. Automatisierte Dokumentation f&uuml;r Praxen und ein pers&ouml;nlicher Gesundheits-Wallet f&uuml;r Patientinnen und Patienten.</p>
             <div class="cta-row">
               <button class="btn btn-primary" id="cta-hero">Interesse vormerken</button>
-              <button class="btn btn-ghost">Mehr erfahren</button>
+              <a class="btn btn-ghost" href="more.html">Mehr erfahren</a>
             </div>
           </div>
           <div class="hero-card reveal">
             <div class="floating-badge">
-              <span>AI</span> Intelligente Erfassung & Strukturierung
+              <span>AI</span> Intelligente Erfassung &amp; Strukturierung
             </div>
             <div class="stat-grid">
               <div class="stat">
                 <strong>Automatische Transkripte</strong>
-                <small>Besuchsnotizen ohne Tippen – direkt in der Akte.</small>
+                <small>Besuchsnotizen ohne Tippen &ndash; direkt in der Akte.</small>
               </div>
               <div class="stat">
                 <strong>Patienten-Wallet</strong>
@@ -606,41 +707,39 @@
       </section>
 
       <section class="reveal">
-        <h2 class="section-title">Für Ärztinnen & Praxen</h2>
-        <p class="section-sub">Vereinfachen Sie Ihren Praxisalltag mit automatischer Dokumentation, klaren Workflows und
-          sicherer Speicherung – entwickelt für moderne Teams.</p>
+        <h2 class="section-title">F&uuml;r &Auml;rztinnen &amp; Praxen</h2>
+        <p class="section-sub">Vereinfachen Sie Ihren Praxisalltag mit automatischer Dokumentation, klaren Workflows und sicherer Speicherung &ndash; entwickelt f&uuml;r moderne Teams.</p>
         <div class="value-grid">
           <div class="card">
             <div class="icon">A</div>
-            <h4>Automatische Transkription & Dokumentation</h4>
-            <p>Konsultationen werden live erfasst, sauber strukturiert und können sofort freigegeben werden.</p>
+            <h4>Automatische Transkription &amp; Dokumentation</h4>
+            <p>Konsultationen werden live erfasst, sauber strukturiert und k&ouml;nnen sofort freigegeben werden.</p>
           </div>
           <div class="card">
             <div class="icon">Q</div>
             <h4>Patienten-Management mit QR-Code-Check-In</h4>
-            <p>Check-In am Empfang, sofortige Zuordnung zur Akte, klare Abläufe im Team.</p>
+            <p>Check-In am Empfang, sofortige Zuordnung zur Akte, klare Abl&auml;ufe im Team.</p>
           </div>
           <div class="card">
             <div class="icon">S</div>
-            <h4>Sichere Speicherung & Export</h4>
-            <p>Verschlüsselte Datenhaltung mit Export in Standardformaten für Weitergabe und Abrechnung.</p>
+            <h4>Sichere Speicherung &amp; Export</h4>
+            <p>Verschl&uuml;sselte Datenhaltung mit Export in Standardformaten f&uuml;r Weitergabe und Abrechnung.</p>
           </div>
         </div>
       </section>
 
       <section class="reveal">
-        <h2 class="section-title">Für Patientinnen & Patienten</h2>
-        <p class="section-sub">Behält den Überblick über Gesundheitsdaten, Arztbesuche und Empfehlungen – immer
-          erreichbar, immer aktuell.</p>
+        <h2 class="section-title">F&uuml;r Patientinnen &amp; Patienten</h2>
+        <p class="section-sub">Beh&auml;lt den &Uuml;berblick &uuml;ber Gesundheitsdaten, Arztbesuche und Empfehlungen &ndash; immer erreichbar, immer aktuell.</p>
         <div class="value-grid">
           <div class="card">
             <div class="icon">G</div>
             <h4>Alle Gesundheitsdaten in einer App</h4>
-            <p>Dokumente, Rezepte, Impfungen – zentral gespeichert und schnell auffindbar.</p>
+            <p>Dokumente, Rezepte, Impfungen &ndash; zentral gespeichert und schnell auffindbar.</p>
           </div>
           <div class="card">
             <div class="icon">B</div>
-            <h4>Übersicht über Befunde & Arztbesuche</h4>
+            <h4>&Uuml;bersicht &uuml;ber Befunde &amp; Arztbesuche</h4>
             <p>Chronologische Timeline mit wichtigen Details und Erinnerungen.</p>
           </div>
           <div class="card">
@@ -653,30 +752,26 @@
 
       <section class="reveal">
         <h2 class="section-title">Das Produkt in zwei Ansichten</h2>
-        <p class="section-sub">MediNote verbindet Praxis-Workflows mit dem persönlichen Gesundheits-Wallet.
-          Minimalistisches Interface, klare Prioritäten, Apple-inspirierte Ästhetik.</p>
+        <p class="section-sub">MediNote verbindet Praxis-Workflows mit dem pers&ouml;nlichen Gesundheits-Wallet. Minimalistisches Interface, klare Priorit&auml;ten, Apple-inspirierte &Auml;sthetik.</p>
         <div class="product-grid">
           <div class="product-card">
             <div class="tag">Praxis-Ansicht</div>
-            <h3>MediNote für Praxen</h3>
-            <p>Automatische Dokumentation, strukturierte Patientendossiers und ein Frontdesk-Flow mit QR-Code-Check-In.
-            </p>
+            <h3>MediNote f&uuml;r Praxen</h3>
+            <p>Automatische Dokumentation, strukturierte Patientendossiers und ein Frontdesk-Flow mit QR-Code-Check-In.</p>
             <div class="media" aria-label="Produktvisualisierung Praxen"></div>
           </div>
           <div class="product-card">
             <div class="tag">Patienten-Ansicht</div>
-            <h3>MediNote für Patienten</h3>
-            <p>Persönlicher Gesundheits-Wallet, Befunde, Arztbesuche und Empfehlungen – sicher gespeichert und sofort
-              griffbereit.</p>
+            <h3>MediNote f&uuml;r Patienten</h3>
+            <p>Pers&ouml;nlicher Gesundheits-Wallet, Befunde, Arztbesuche und Empfehlungen &ndash; sicher gespeichert und sofort griffbereit.</p>
             <div class="media" aria-label="Produktvisualisierung Patienten"></div>
           </div>
         </div>
       </section>
 
       <section class="contact reveal">
-        <h2 class="section-title">Kontakt & Validierung</h2>
-        <p class="section-sub">MediNote befindet sich aktuell in Entwicklung. Trage dich ein, um benachrichtigt zu
-          werden.</p>
+        <h2 class="section-title">Kontakt &amp; Validierung</h2>
+        <p class="section-sub">MediNote befindet sich aktuell in Entwicklung. Trage dich ein, um benachrichtigt zu werden.</p>
         <form id="notify-form" action="https://formsubmit.co/info.medinote@gmail.com" method="POST">
           <input type="hidden" name="_captcha" value="false">
           <input type="email" name="email" placeholder="E-Mail-Adresse" required aria-label="E-Mail-Adresse">
@@ -690,7 +785,7 @@
           <div class="brand">
             <div class="brand-mark"></div>MediNote
           </div>
-          <div>Datenschutz · <a href="mailto:info.medinote@gmail.com">info.medinote@gmail.com</a></div>
+          <div>Datenschutz &ndash; <a href="mailto:info.medinote@gmail.com">info.medinote@gmail.com</a></div>
         </div>
       </footer>
     </div>
@@ -710,11 +805,11 @@
 
     const form = document.getElementById('notify-form');
     const message = document.getElementById('form-message');
-    const submitBtn = form.querySelector('button[type=\"submit\"]');
+    const submitBtn = form.querySelector('button[type="submit"]');
 
     const setStatus = (variant, text) => {
       message.className = `form-status ${variant}`.trim();
-      message.innerHTML = `<span class=\"status-icon\" aria-hidden=\"true\"></span><span>${text}</span>`;
+      message.innerHTML = `<span class="status-icon" aria-hidden="true"></span><span>${text}</span>`;
       message.style.display = 'flex';
     };
 
@@ -733,10 +828,10 @@
 
         if (!response.ok) throw new Error('Request failed');
 
-        setStatus('success', 'Danke! Wir melden uns, sobald MediNote verfügbar ist.');
+        setStatus('success', 'Danke! Wir melden uns, sobald MediNote verf&uuml;gbar ist.');
         form.reset();
       } catch (error) {
-        setStatus('error', 'Da ist etwas schiefgelaufen. Bitte versuche es später erneut.');
+        setStatus('error', 'Da ist etwas schiefgelaufen. Bitte versuche es sp&auml;ter erneut.');
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Interesse vormerken';

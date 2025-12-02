@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mehr &uuml;ber MediNote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --bg-strong: #e8eefb;
+      --card: #ffffff;
+      --ink: #0c1426;
+      --muted: #56627a;
+      --accent: #2d7cf8;
+      --accent-2: #76d0ff;
+      --accent-soft: #e6f1ff;
+      --line: rgba(12, 20, 38, 0.08);
+      --shadow: 0 18px 60px rgba(10, 25, 55, 0.12);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(45, 124, 248, 0.12), transparent 32%),
+        radial-gradient(circle at 82% 8%, rgba(118, 208, 255, 0.12), transparent 30%),
+        linear-gradient(180deg, #f7f9fc 0%, #eef3ff 100%);
+      color: var(--ink);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .page::after {
+      content: '';
+      position: absolute;
+      inset: 8% 8% auto;
+      height: 320px;
+      background: radial-gradient(120% 100% at 50% 0%, rgba(12, 20, 38, 0.12), transparent);
+      filter: blur(70px);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .grid-lines::before,
+    .grid-lines::after {
+      content: '';
+      position: absolute;
+      inset: -60px;
+      background:
+        linear-gradient(90deg, rgba(12, 20, 38, 0.06) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(12, 20, 38, 0.06) 1px, transparent 1px);
+      background-size: 160px 160px;
+      opacity: 0.12;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+    }
+
+    .grid-lines::after {
+      filter: blur(1px);
+      opacity: 0.08;
+    }
+
+    .container {
+      width: min(1180px, 92vw);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      padding-bottom: 60px;
+    }
+
+    header {
+      padding: 26px 0 10px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 32px rgba(12, 20, 38, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--ink);
+      font-family: 'Space Grotesk', 'Manrope', system-ui, sans-serif;
+    }
+
+    .brand-mark {
+      width: 14px;
+      height: 14px;
+      border-radius: 5px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 24px rgba(45, 124, 248, 0.32);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, rgba(45, 124, 248, 0.12), rgba(118, 208, 255, 0.12));
+      color: var(--ink);
+      font-weight: 600;
+      border: 1px solid rgba(15, 163, 177, 0.18);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      margin: 12px 0 6px;
+      border-radius: 12px;
+      background: rgba(12, 18, 36, 0.04);
+      color: var(--ink);
+      font-weight: 600;
+      border: 1px solid rgba(12, 18, 36, 0.08);
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      background: rgba(12, 18, 36, 0.07);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Space Grotesk', 'Manrope', system-ui, sans-serif;
+      letter-spacing: -0.02em;
+      margin: 0 0 16px;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 4vw, 3.2rem);
+      line-height: 1.1;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 18px 20px;
+      color: var(--muted);
+      font-size: 1.02rem;
+      padding-left: 18px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    section {
+      padding: 72px 0 0;
+    }
+
+    .section-card {
+      background: linear-gradient(145deg, #ffffff, #f3f6fb);
+      border-radius: calc(var(--radius) + 4px);
+      padding: 28px;
+      border: 1px solid rgba(12, 18, 36, 0.06);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 16% 16%, rgba(45, 124, 248, 0.12), transparent 32%);
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .section-card>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .text-lead {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 800px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, color 160ms ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      padding: 14px 20px;
+      border-radius: 14px;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #f7fbff;
+      box-shadow: 0 18px 45px rgba(45, 124, 248, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 55px rgba(45, 124, 248, 0.42);
+      text-decoration: none;
+    }
+
+    footer {
+      padding: 44px 0 60px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 840px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .section-card {
+        padding: 22px;
+      }
+
+      section {
+        padding-top: 46px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .back-link {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .btn-primary {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page grid-lines">
+    <div class="container">
+      <header>
+        <div class="topbar">
+          <div class="brand">
+            <div class="brand-mark"></div>
+            MediNote
+          </div>
+          <div class="pill">Mehr erfahren</div>
+        </div>
+      </header>
+
+      <a class="back-link" href="index.html">&larr; Zur&uuml;ck zur Startseite</a>
+
+      <main class="stack">
+        <section>
+          <div class="section-card">
+            <h1>Mehr &uuml;ber MediNote</h1>
+            <p class="text-lead">MediNote ist die digitale Gesundheitsakte der n&auml;chsten Generation &ndash; entwickelt f&uuml;r &Auml;rzt:innen, Praxen und Patient:innen. Hier erf&auml;hrst du im Detail, welches Problem wir l&ouml;sen, wie unsere Technologie funktioniert und wie sie das Gesundheitswesen nachhaltig verbessern soll.</p>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-card">
+            <h2>Das Problem im Gesundheitswesen</h2>
+            <p>Das heutige Gesundheitssystem k&auml;mpft mit zahlreichen strukturellen Herausforderungen:</p>
+            <ul>
+              <li>Medizinische Informationen liegen oft verstreut und unvollst&auml;ndig vor.</li>
+              <li>Praxen m&uuml;ssen wertvolle Zeit f&uuml;r Dokumentation und wiederholte Anamnesen aufwenden.</li>
+              <li>Patient:innen behalten kaum den &Uuml;berblick &uuml;ber Befunde, Diagnosen und Medikationen.</li>
+              <li>Systeme unterschiedlicher Anbieter sind kaum miteinander kompatibel.</li>
+              <li>Der Informationsaustausch zwischen Praxen ist langsam und ineffizient.</li>
+              <li>Transparenz und Datenkontrolle f&uuml;r Patient:innen fehlen h&auml;ufig.</li>
+            </ul>
+            <p>MediNote setzt genau hier an.</p>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-card">
+            <h2>Unsere L&ouml;sung</h2>
+            <p>MediNote vereint alle relevanten Gesundheitsdaten &ndash; sicher, strukturiert und jederzeit verf&uuml;gbar.</p>
+            <p>Unser Ansatz:</p>
+            <ul>
+              <li>Eine zentrale Gesundheitsakte, die &Auml;rzt:innen und Patient:innen verbindet</li>
+              <li>Automatisierte Dokumentation, unterst&uuml;tzt durch moderne KI</li>
+              <li>Einfaches Teilen von Daten, z. B. beim Praxiswechsel oder nach Klinikaufenthalten</li>
+              <li>QR-Code-basierte Patientenaufnahme, die sofort alle wichtigen Informationen liefert</li>
+              <li>Klare und verst&auml;ndliche Aufbereitung von Befunden und Verlaufsdaten</li>
+            </ul>
+            <p>Unser Ziel: Mehr Zeit f&uuml;r die Behandlung, weniger Zeit f&uuml;r Papierkram.</p>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-card">
+            <h2>Wie MediNote funktioniert &ndash; im Detail</h2>
+            <ol>
+              <li>
+                <strong>1. Patientenaufnahme per QR-Code</strong>
+                <p>Beim Betreten der Praxis scannt der Patient einen individuellen MediNote-QR-Code. Dadurch erh&auml;lt die Praxis Zugriff auf die freigegebenen Gesundheitsdaten &ndash; sicher und DSGVO-konform.</p>
+              </li>
+              <li>
+                <strong>2. Bereitstellung der relevanten Informationen</strong>
+                <p>Die Praxis sieht sofort strukturierte Anamnesen, Medikamente, Vorerkrankungen, Befunde und vergangene Arztbesuche. Informationen, die sonst lange gesucht oder neu erhoben werden m&uuml;ssten.</p>
+              </li>
+              <li>
+                <strong>3. KI-gest&uuml;tzte Analyse und Dokumentation</strong>
+                <p>MediNotes KI hilft dabei, Daten zu sortieren, Zusammenh&auml;nge zu erkennen und Dokumentation aufzubereiten. So entsteht eine konsistente, gut strukturierte Akte &ndash; ohne Mehrarbeit.</p>
+              </li>
+              <li>
+                <strong>4. Langfristige Gesundheitsakte</strong>
+                <p>Patient:innen behalten ihre Daten lebenslang. Unabh&auml;ngig davon, welche Praxis sie besuchen. Die Akte w&auml;chst mit jedem Arztbesuch &ndash; automatisch und &uuml;bersichtlich.</p>
+              </li>
+              <li>
+                <strong>5. Zukunftsfunktionen</strong>
+                <p>Geplant sind u. a.:</p>
+                <ul>
+                  <li>pers&ouml;nliche KI f&uuml;r medizinische Fragen</li>
+                  <li>automatische Terminvorbereitung f&uuml;r Praxen</li>
+                  <li>intelligente Empfehlungen f&uuml;r Pr&auml;vention</li>
+                  <li>automatische Erkennung von Risikokonstellationen</li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-card">
+            <h2>Sicherheit &amp; Datenschutz</h2>
+            <p>Gesundheitsdaten geh&ouml;ren zu den sensibelsten Daten &uuml;berhaupt. Deshalb ist Datenschutz ein Kernbestandteil von MediNote:</p>
+            <ul>
+              <li>100% DSGVO-konform</li>
+              <li>Datenverschl&uuml;sselung auf modernstem Stand</li>
+              <li>Patient:innen entscheiden, welche Daten freigegeben werden</li>
+              <li>Keine Weitergabe oder Nutzung f&uuml;r Werbung</li>
+              <li>Maximale Transparenz &uuml;ber jede Datenbewegung</li>
+            </ul>
+            <p>MediNote sch&uuml;tzt, was am wichtigsten ist: Vertrauen.</p>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-card">
+            <h2>Warum wir MediNote entwickeln</h2>
+            <p>Wir sind &uuml;berzeugt, dass moderne Medizin nur funktioniert, wenn Informationen dort ankommen, wo sie gebraucht werden &ndash; zur richtigen Zeit, im richtigen Kontext.</p>
+            <p>Wir entwickeln MediNote, weil wir glauben, dass:</p>
+            <ul>
+              <li>Patient:innen das Recht auf eine verst&auml;ndliche und vollst&auml;ndige Gesundheitsakte haben</li>
+              <li>&Auml;rzt:innen weniger dokumentieren und mehr behandeln sollten</li>
+              <li>Praxen effizienter arbeiten k&ouml;nnen, ohne Qualit&auml;t zu riskieren</li>
+              <li>KI dabei unterst&uuml;tzen kann, das Gesundheitswesen menschlicher zu machen</li>
+            </ul>
+            <p>MediNote steht f&uuml;r ein smarteres, transparenteres und patientenzentriertes Gesundheitswesen.</p>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-card">
+            <h2>Call to Action</h2>
+            <p>Werde Teil der fr&uuml;hen Community und teste MediNote als Erste:r.</p>
+            <p>Jetzt unverbindlich f&uuml;r die Warteliste eintragen.</p>
+            <a class="btn btn-primary" href="index.html#notify-form">F&uuml;r Warteliste eintragen</a>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div class="footer-row">
+          <div class="brand">
+            <div class="brand-mark"></div>MediNote
+          </div>
+          <div>Datenschutz &ndash; <a href="mailto:info.medinote@gmail.com">info.medinote@gmail.com</a></div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+
+</html>
