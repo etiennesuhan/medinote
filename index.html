@@ -85,6 +85,26 @@
       opacity: 0.08;
     }
 
+    .progress-wrap {
+      width: 100%;
+      height: 6px;
+      background: rgba(12, 20, 38, 0.12);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 12px;
+      box-shadow: 0 6px 16px rgba(12, 20, 38, 0.12);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 100%;
+      transform: scaleX(0);
+      transform-origin: left;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      box-shadow: 0 8px 22px rgba(45, 124, 248, 0.35);
+      transition: transform 80ms linear;
+    }
+
     [data-lang-block] {
       display: none;
     }
@@ -102,7 +122,12 @@
     }
 
     header {
-      padding: 26px 0 12px;
+      padding: 16px 0 12px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: linear-gradient(180deg, rgba(247, 249, 252, 0.94) 0%, rgba(247, 249, 252, 0.7) 100%);
+      backdrop-filter: blur(12px);
     }
 
     .topbar {
@@ -111,7 +136,7 @@
       justify-content: space-between;
       gap: 16px;
       padding: 14px 18px;
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.95);
       border-radius: 16px;
       border: 1px solid var(--line);
       box-shadow: 0 12px 32px rgba(12, 20, 38, 0.08);
@@ -699,6 +724,7 @@
 </head>
 
 <body>
+  <div class="progress-wrap"><div id="scroll-progress" class="progress-bar"></div></div>
   <div class="page grid-lines">
     <div class="container">
       <header>
@@ -712,6 +738,7 @@
             <button type="button" data-set-lang="en">EN</button>
           </div>
         </div>
+        <div class="progress-wrap"><div id="scroll-progress" class="progress-bar"></div></div>
       </header>
 
       <section class="hero">
@@ -995,6 +1022,18 @@
     langButtons.forEach(btn => {
       btn.addEventListener('click', () => applyLang(btn.dataset.setLang));
     });
+
+    const progressBar = document.getElementById('scroll-progress');
+    const updateProgress = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollable <= 0 || !progressBar) return;
+      const scrolled = Math.max(0, Math.min(1, (window.scrollY || document.documentElement.scrollTop) / scrollable));
+      progressBar.style.transform = `scaleX(${scrolled})`;
+    };
+
+    updateProgress();
+    window.addEventListener('scroll', updateProgress);
+    window.addEventListener('resize', updateProgress);
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
