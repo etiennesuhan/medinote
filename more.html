@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-lang="de">
 
 <head>
   <meta charset="UTF-8">
@@ -75,6 +75,15 @@
       opacity: 0.08;
     }
 
+    [data-lang-block] {
+      display: none;
+    }
+
+    html[data-lang="de"] [data-lang-block="de"],
+    html[data-lang="en"] [data-lang-block="en"] {
+      display: initial;
+    }
+
     .container {
       width: min(1180px, 92vw);
       margin: 0 auto;
@@ -130,6 +139,34 @@
       color: var(--ink);
       font-weight: 600;
       border: 1px solid rgba(15, 163, 177, 0.18);
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .lang-toggle button {
+      border: 1px solid rgba(12, 18, 36, 0.12);
+      background: rgba(12, 18, 36, 0.04);
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    .lang-toggle button.active {
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #f7fbff;
+      box-shadow: 0 10px 24px rgba(45, 124, 248, 0.3);
+      border-color: rgba(45, 124, 248, 0.3);
+    }
+
+    .lang-toggle button:hover {
+      transform: translateY(-1px);
     }
 
     .back-link {
@@ -192,7 +229,7 @@
     }
 
     section {
-      padding: 72px 0 0;
+      padding: 0;
     }
 
     .section-card {
@@ -217,6 +254,22 @@
     .section-card>* {
       position: relative;
       z-index: 1;
+    }
+
+    .content-card {
+      padding: 32px;
+      display: grid;
+      gap: 36px;
+    }
+
+    .content-card section {
+      padding: 0;
+      margin: 0;
+    }
+
+    .content-card section+section {
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
     }
 
     .text-lead {
@@ -292,7 +345,7 @@
       }
 
       section {
-        padding-top: 46px;
+        padding-top: 0;
       }
     }
 
@@ -318,124 +371,151 @@
             <div class="brand-mark"></div>
             MediNote
           </div>
-          <div class="pill">Mehr erfahren</div>
+          <div class="pill" data-lang-block="de">Mehr erfahren</div>
+          <div class="pill" data-lang-block="en">Learn more</div>
+          <div class="lang-toggle" aria-label="Sprache wechseln">
+            <button type="button" data-set-lang="de" class="active">DE</button>
+            <button type="button" data-set-lang="en">EN</button>
+          </div>
         </div>
       </header>
 
-      <a class="back-link" href="index.html">&larr; Zur&uuml;ck zur Startseite</a>
+      <a class="back-link" href="index.html">&larr; <span data-lang-block="de">Zur&uuml;ck zur Startseite</span><span data-lang-block="en">Back to home</span></a>
 
       <main class="stack">
-        <section>
-          <div class="section-card">
-            <h1>Mehr &uuml;ber MediNote</h1>
-            <p class="text-lead">MediNote ist die digitale Gesundheitsakte der n&auml;chsten Generation &ndash; entwickelt f&uuml;r &Auml;rzt:innen, Praxen und Patient:innen. Hier erf&auml;hrst du im Detail, welches Problem wir l&ouml;sen, wie unsere Technologie funktioniert und wie sie das Gesundheitswesen nachhaltig verbessern soll.</p>
-          </div>
-        </section>
+        <div class="section-card content-card">
+          <section>
+            <h1>
+              <span data-lang-block="de">MediNote in K&uuml;rze</span>
+              <span data-lang-block="en">MediNote in brief</span>
+            </h1>
+            <p class="text-lead">
+              <span data-lang-block="de">Eine kompakte, sichere Gesundheitsakte mit zwei Blickwinkeln: Praxen sehen sofort, was wichtig ist; Patient:innen behalten die Kontrolle &uuml;ber ihre Daten.</span>
+              <span data-lang-block="en">A compact, secure health record with two views: practices see what matters instantly; patients stay in control of their data.</span>
+            </p>
+          </section>
 
-        <section>
-          <div class="section-card">
-            <h2>Das Problem im Gesundheitswesen</h2>
-            <p>Das heutige Gesundheitssystem k&auml;mpft mit zahlreichen strukturellen Herausforderungen:</p>
-            <ul>
-              <li>Medizinische Informationen liegen oft verstreut und unvollst&auml;ndig vor.</li>
-              <li>Praxen m&uuml;ssen wertvolle Zeit f&uuml;r Dokumentation und wiederholte Anamnesen aufwenden.</li>
-              <li>Patient:innen behalten kaum den &Uuml;berblick &uuml;ber Befunde, Diagnosen und Medikationen.</li>
-              <li>Systeme unterschiedlicher Anbieter sind kaum miteinander kompatibel.</li>
-              <li>Der Informationsaustausch zwischen Praxen ist langsam und ineffizient.</li>
-              <li>Transparenz und Datenkontrolle f&uuml;r Patient:innen fehlen h&auml;ufig.</li>
-            </ul>
-            <p>MediNote setzt genau hier an.</p>
-          </div>
-        </section>
+          <section>
+            <h2>
+              <span data-lang-block="de">Kernnutzen auf einen Blick</span>
+              <span data-lang-block="en">Core value at a glance</span>
+            </h2>
+            <p class="text-lead">
+              <span data-lang-block="de">MediNote sammelt Gespr&auml;che, Befunde, Medikationen und Verl&auml;ufe in einem strukturierten Dossier. Transkripte werden automatisch gefiltert, Smalltalk f&auml;llt raus, nur die medizinisch relevanten Aussagen bleiben. Diese werden zusammengefasst und f&uuml;r den Patienten bereitgestellt.</span>
+              <span data-lang-block="en">MediNote bundles conversations, findings, medications and history in one structured file. Transcripts are auto-filtered, small talk drops out, only medically relevant statements stay. They are summarised and handed to the patient.</span>
+            </p>
+            <p>
+              <span data-lang-block="de">F&uuml;r Praxen bedeutet das: sofort ein priorisierter Blick auf Symptome, Diagnose und Behandlungsvorschl&auml;ge, inklusive Verkn&uuml;pfungen zu fr&uuml;heren Diagnosen. F&uuml;r Patient:innen: volle Transparenz und die M&ouml;glichkeit zu steuern, welche Daten geteilt werden.</span>
+              <span data-lang-block="en">For practices: an instant, prioritised view on symptoms, diagnosis and treatment ideas, linked to previous cases. For patients: full transparency and control over what gets shared.</span>
+            </p>
+            <p>
+              <span data-lang-block="de">Damit reduziert sich der Papierkram, Entscheidungen werden schneller, und beide Seiten haben den gleichen, aktuellen Wissensstand.</span>
+              <span data-lang-block="en">Paperwork drops, decisions get faster, and both sides work from the same up-to-date picture.</span>
+            </p>
+          </section>
 
-        <section>
-          <div class="section-card">
-            <h2>Unsere L&ouml;sung</h2>
-            <p>MediNote vereint alle relevanten Gesundheitsdaten &ndash; sicher, strukturiert und jederzeit verf&uuml;gbar.</p>
-            <p>Unser Ansatz:</p>
-            <ul>
-              <li>Eine zentrale Gesundheitsakte, die &Auml;rzt:innen und Patient:innen verbindet</li>
-              <li>Automatisierte Dokumentation, unterst&uuml;tzt durch moderne KI</li>
-              <li>Einfaches Teilen von Daten, z. B. beim Praxiswechsel oder nach Klinikaufenthalten</li>
-              <li>QR-Code-basierte Patientenaufnahme, die sofort alle wichtigen Informationen liefert</li>
-              <li>Klare und verst&auml;ndliche Aufbereitung von Befunden und Verlaufsdaten</li>
-            </ul>
-            <p>Unser Ziel: Mehr Zeit f&uuml;r die Behandlung, weniger Zeit f&uuml;r Papierkram.</p>
-          </div>
-        </section>
+          <section>
+            <h2>
+              <span data-lang-block="de">So funktioniert MediNote</span>
+              <span data-lang-block="en">How MediNote works</span>
+            </h2>
+            <p>
+              <strong>1. <span data-lang-block="de">Check-in via QR.</span><span data-lang-block="en">Check-in via QR.</span></strong>
+              <span data-lang-block="de"> Patient:innen w&auml;hlen aus, welche Daten die Praxis sehen darf, und geben sie beim Empfang per QR-Code frei. Der Zugriff ist DSGVO-konform und sofort einsatzbereit.</span>
+              <span data-lang-block="en"> Patients choose what the practice may see and share it at reception via QR. Access is compliant and instant.</span>
+            </p>
+            <p>
+              <strong>2. <span data-lang-block="de">Gespr&auml;ch &amp; Erfassung.</span><span data-lang-block="en">Consultation &amp; capture.</span></strong>
+              <span data-lang-block="de"> W&auml;hrend des Arzt-Patienten-Gespr&auml;chs erstellt MediNote ein Transkript, filtert Smalltalk heraus und h&auml;lt nur die medizinisch relevanten Aussagen.</span>
+              <span data-lang-block="en"> During the consultation MediNote creates a transcript, filters small talk and keeps only the clinical parts.</span>
+            </p>
+            <p>
+              <strong>3. <span data-lang-block="de">Struktur &amp; Erkenntnisse.</span><span data-lang-block="en">Structure &amp; insights.</span></strong>
+              <span data-lang-block="de"> MediNote fasst die Kernaussagen zusammen und markiert Symptome, m&ouml;gliche Diagnosen und vorgeschlagene Behandlungen. Wichtiges wird nach Relevanz sortiert, Zusammenh&auml;nge zu fr&uuml;heren Diagnosen werden aufgezeigt.</span>
+              <span data-lang-block="en"> MediNote summarises key points and flags symptoms, potential diagnoses and suggested treatments. Items are ranked by relevance; links to past diagnoses are highlighted.</span>
+            </p>
+            <p>
+              <strong>4. <span data-lang-block="de">Teilen &amp; weiterarbeiten.</span><span data-lang-block="en">Share &amp; continue.</span></strong>
+              <span data-lang-block="de"> Die verdichtete Version steht dem Patienten bereit, die Praxis kann sie sicher weitergeben oder in den n&auml;chsten Termin &uuml;bernehmen. Die Akte w&auml;chst automatisch mit.</span>
+              <span data-lang-block="en"> The condensed version is available to the patient; the practice can share it securely or reuse it at the next visit. The record grows automatically.</span>
+            </p>
+          </section>
 
-        <section>
-          <div class="section-card">
-            <h2>Wie MediNote funktioniert &ndash; im Detail</h2>
-            <ol>
-              <li>
-                <strong>1. Patientenaufnahme per QR-Code</strong>
-                <p>Beim Betreten der Praxis scannt der Patient einen individuellen MediNote-QR-Code. Dadurch erh&auml;lt die Praxis Zugriff auf die freigegebenen Gesundheitsdaten &ndash; sicher und DSGVO-konform.</p>
-              </li>
-              <li>
-                <strong>2. Bereitstellung der relevanten Informationen</strong>
-                <p>Die Praxis sieht sofort strukturierte Anamnesen, Medikamente, Vorerkrankungen, Befunde und vergangene Arztbesuche. Informationen, die sonst lange gesucht oder neu erhoben werden m&uuml;ssten.</p>
-              </li>
-              <li>
-                <strong>3. KI-gest&uuml;tzte Analyse und Dokumentation</strong>
-                <p>MediNotes KI hilft dabei, Daten zu sortieren, Zusammenh&auml;nge zu erkennen und Dokumentation aufzubereiten. So entsteht eine konsistente, gut strukturierte Akte &ndash; ohne Mehrarbeit.</p>
-              </li>
-              <li>
-                <strong>4. Langfristige Gesundheitsakte</strong>
-                <p>Patient:innen behalten ihre Daten lebenslang. Unabh&auml;ngig davon, welche Praxis sie besuchen. Die Akte w&auml;chst mit jedem Arztbesuch &ndash; automatisch und &uuml;bersichtlich.</p>
-              </li>
-              <li>
-                <strong>5. Zukunftsfunktionen</strong>
-                <p>Geplant sind u. a.:</p>
-                <ul>
-                  <li>pers&ouml;nliche KI f&uuml;r medizinische Fragen</li>
-                  <li>automatische Terminvorbereitung f&uuml;r Praxen</li>
-                  <li>intelligente Empfehlungen f&uuml;r Pr&auml;vention</li>
-                  <li>automatische Erkennung von Risikokonstellationen</li>
-                </ul>
-              </li>
-            </ol>
-          </div>
-        </section>
+          <section>
+            <h2>
+              <span data-lang-block="de">Funktionen f&uuml;r Praxen</span>
+              <span data-lang-block="en">For practices</span>
+            </h2>
+            <p>
+              <span data-lang-block="de">Gespr&auml;che werden automatisch transkribiert, irrelevante Passagen ausgesiebt und als pr&auml;gnante Notizen f&uuml;r den Patienten aufbereitet. Symptome, Diagnoseideen und Therapievorschl&auml;ge werden automatisch erkannt.</span>
+              <span data-lang-block="en">Consultations are transcribed, irrelevant passages removed and turned into concise notes for the patient. Symptoms, diagnostic ideas and treatment suggestions are recognised automatically.</span>
+            </p>
+            <p>
+              <span data-lang-block="de">&Auml;rzt:innen sehen beim &Ouml;ffnen der Akte die wichtigsten Punkte f&uuml;r den aktuellen Besuch, sortiert nach Relevanz. Verbindungen zu fr&uuml;heren Diagnosen oder Befunden werden hervorgehoben, damit Entscheidungen schneller fallen. Der Datenaustausch bleibt kontrolliert: Nur freigegebene Inhalte sind sichtbar.</span>
+              <span data-lang-block="en">When the record opens, clinicians see the most important points for the current visit, ranked by relevance. Links to earlier diagnoses or findings are highlighted so decisions are faster. Data exchange stays controlled: only shared content is visible.</span>
+            </p>
+          </section>
 
-        <section>
-          <div class="section-card">
-            <h2>Sicherheit &amp; Datenschutz</h2>
-            <p>Gesundheitsdaten geh&ouml;ren zu den sensibelsten Daten &uuml;berhaupt. Deshalb ist Datenschutz ein Kernbestandteil von MediNote:</p>
-            <ul>
-              <li>100% DSGVO-konform</li>
-              <li>Datenverschl&uuml;sselung auf modernstem Stand</li>
-              <li>Patient:innen entscheiden, welche Daten freigegeben werden</li>
-              <li>Keine Weitergabe oder Nutzung f&uuml;r Werbung</li>
-              <li>Maximale Transparenz &uuml;ber jede Datenbewegung</li>
-            </ul>
-            <p>MediNote sch&uuml;tzt, was am wichtigsten ist: Vertrauen.</p>
-          </div>
-        </section>
+          <section>
+            <h2>
+              <span data-lang-block="de">Funktionen f&uuml;r Patient:innen</span>
+              <span data-lang-block="en">For patients</span>
+            </h2>
+            <p>
+              <span data-lang-block="de">Patient:innen k&ouml;nnen alle bereitgestellten Befunde der Praxen einsehen und eigene Gesundheitsdaten erfassen &ndash; von Wearables &uuml;ber Gewicht bis hin zu Symptomen. Ein RAG-Modell pr&uuml;ft neue Eintr&auml;ge, gibt Hinweise und markiert, dass Empfehlungen von &Auml;rzt:innen gegengezeichnet werden sollten.</span>
+              <span data-lang-block="en">Patients can view all findings shared by practices and add their own health data &ndash; from wearables to weight to symptoms. A retrieval model reviews new entries, offers hints and labels them for clinician review.</span>
+            </p>
+            <p>
+              <span data-lang-block="de">Termine k&ouml;nnen automatisch vorgeschlagen und erstellt werden, wenn neue Symptome auftreten. Welche Daten eine Praxis erh&auml;lt, steuern Patient:innen selbst &uuml;ber den QR-Check-in.</span>
+              <span data-lang-block="en">Appointments can be suggested and created automatically when new symptoms appear. Which data a practice receives is controlled by patients via QR check-in.</span>
+            </p>
+          </section>
 
-        <section>
-          <div class="section-card">
-            <h2>Warum wir MediNote entwickeln</h2>
-            <p>Wir sind &uuml;berzeugt, dass moderne Medizin nur funktioniert, wenn Informationen dort ankommen, wo sie gebraucht werden &ndash; zur richtigen Zeit, im richtigen Kontext.</p>
-            <p>Wir entwickeln MediNote, weil wir glauben, dass:</p>
-            <ul>
-              <li>Patient:innen das Recht auf eine verst&auml;ndliche und vollst&auml;ndige Gesundheitsakte haben</li>
-              <li>&Auml;rzt:innen weniger dokumentieren und mehr behandeln sollten</li>
-              <li>Praxen effizienter arbeiten k&ouml;nnen, ohne Qualit&auml;t zu riskieren</li>
-              <li>KI dabei unterst&uuml;tzen kann, das Gesundheitswesen menschlicher zu machen</li>
-            </ul>
-            <p>MediNote steht f&uuml;r ein smarteres, transparenteres und patientenzentriertes Gesundheitswesen.</p>
-          </div>
-        </section>
+          <section>
+            <h2>
+              <span data-lang-block="de">Sicherheit &amp; Kontrolle</span>
+              <span data-lang-block="en">Security &amp; control</span>
+            </h2>
+            <p>
+              <span data-lang-block="de">Datenschutz ist Standard, nicht Zusatz. MediNote ist Ende-zu-Ende verschl&uuml;sselt und arbeitet strikt DSGVO-konform. Wer Daten sieht, ist jederzeit nachvollziehbar.</span>
+              <span data-lang-block="en">Privacy is the default. MediNote is end-to-end encrypted and strictly GDPR-compliant. Access is traceable at any time.</span>
+            </p>
+            <p>
+              <span data-lang-block="de">Freigaben liegen bei den Nutzer:innen: Sie entscheiden, welche Informationen geteilt werden und k&ouml;nnen Zugriffe sofort entziehen. Zugriffe bleiben transparent und nachvollziehbar.</span>
+              <span data-lang-block="en">Sharing is in the users’ hands: they decide what is shared and can revoke access instantly. Every access stays transparent and traceable.</span>
+            </p>
+          </section>
 
-        <section>
-          <div class="section-card">
-            <h2>Call to Action</h2>
-            <p>Werde Teil der fr&uuml;hen Community und teste MediNote als Erste:r.</p>
-            <p>Jetzt unverbindlich f&uuml;r die Warteliste eintragen.</p>
-            <a class="btn btn-primary" href="index.html#notify-form">F&uuml;r Warteliste eintragen</a>
-          </div>
-        </section>
+          <section>
+            <h2>
+              <span data-lang-block="de">Warum jetzt?</span>
+              <span data-lang-block="en">Why now?</span>
+            </h2>
+            <p>
+              <span data-lang-block="de">Praxisteams sind ausgelastet, Patient:innen erwarten Klarheit, und Daten liegen verstreut. MediNote reduziert den Suchaufwand, filtert Gespr&auml;che automatisch und h&auml;lt die Akte aktuell, ohne mehr Arbeit im Alltag zu erzeugen.</span>
+              <span data-lang-block="en">Practices are at capacity, patients expect clarity, data is scattered. MediNote cuts the search, filters conversations automatically and keeps the record current without adding daily work.</span>
+            </p>
+            <p>
+              <span data-lang-block="de">Die Wirkung ist sofort sp&uuml;rbar: weniger R&uuml;ckfragen am Empfang, ein sauberer &Uuml;berblick f&uuml;r &Auml;rzt:innen und verst&auml;ndliche Informationen f&uuml;r Patient:innen &ndash; alles aus einer einzigen Akte.</span>
+              <span data-lang-block="en">The effect is immediate: fewer clarifying questions at reception, a clear overview for clinicians and understandable information for patients &ndash; all from a single record.</span>
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              <span data-lang-block="de">Call to Action</span>
+              <span data-lang-block="en">Call to action</span>
+            </h2>
+            <p>
+              <span data-lang-block="de">Updates und Insights per Newsletter erhalten, fr&uuml;hen Zugang sichern.</span>
+              <span data-lang-block="en">Get updates and insights via newsletter, secure early access.</span>
+            </p>
+            <a class="btn btn-primary" href="index.html#notify-form">
+              <span data-lang-block="de">Anmeldung zum Newsletter</span>
+              <span data-lang-block="en">Newsletter sign-up</span>
+            </a>
+          </section>
+        </div>
       </main>
 
       <footer>
@@ -443,11 +523,29 @@
           <div class="brand">
             <div class="brand-mark"></div>MediNote
           </div>
-          <div>Datenschutz &ndash; <a href="mailto:info.medinote@gmail.com">info.medinote@gmail.com</a></div>
+          <div>
+            <span data-lang-block="de">Datenschutz</span>
+            <span data-lang-block="en">Privacy</span>
+            &ndash;
+            <a href="mailto:info.medinote@gmail.com">info.medinote@gmail.com</a>
+          </div>
         </div>
       </footer>
     </div>
   </div>
+
+  <script>
+    const langButtons = document.querySelectorAll('[data-set-lang]');
+    const applyLang = (lang) => {
+      document.documentElement.setAttribute('data-lang', lang);
+      document.documentElement.lang = lang;
+      localStorage.setItem('medinote-lang', lang);
+      langButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.setLang === lang));
+    };
+    const currentLang = localStorage.getItem('medinote-lang') || 'de';
+    applyLang(currentLang);
+    langButtons.forEach(btn => btn.addEventListener('click', () => applyLang(btn.dataset.setLang)));
+  </script>
 </body>
 
 </html>

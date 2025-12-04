@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-lang="de">
 
 
 <head>
@@ -85,6 +85,15 @@
       opacity: 0.08;
     }
 
+    [data-lang-block] {
+      display: none;
+    }
+
+    html[data-lang="de"] [data-lang-block="de"],
+    html[data-lang="en"] [data-lang-block="en"] {
+      display: initial;
+    }
+
     .container {
       width: min(1180px, 92vw);
       margin: 0 auto;
@@ -141,9 +150,37 @@
       border: 1px solid rgba(15, 163, 177, 0.18);
     }
 
+    .lang-toggle {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .lang-toggle button {
+      border: 1px solid rgba(12, 18, 36, 0.12);
+      background: rgba(12, 18, 36, 0.04);
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    .lang-toggle button.active {
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #f7fbff;
+      box-shadow: 0 10px 24px rgba(45, 124, 248, 0.3);
+      border-color: rgba(45, 124, 248, 0.3);
+    }
+
+    .lang-toggle button:hover {
+      transform: translateY(-1px);
+    }
+
     .hero {
       position: relative;
-      padding: 78px 0 90px;
+      padding: 68px 0 74px;
     }
 
     .hero::before {
@@ -321,7 +358,7 @@
     }
 
     section {
-      padding: 72px 0 64px;
+      padding: 58px 0 50px;
       position: relative;
       z-index: 1;
     }
@@ -335,7 +372,7 @@
 
     .section-sub {
       color: var(--muted);
-      margin: 0 0 32px;
+      margin: 0 0 22px;
       max-width: 640px;
     }
 
@@ -348,7 +385,7 @@
     .card {
       background: linear-gradient(145deg, #ffffff, #f3f6fb);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 18px;
       border: 1px solid rgba(12, 18, 36, 0.06);
       box-shadow: 0 12px 40px rgba(12, 18, 36, 0.08);
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
@@ -670,18 +707,35 @@
             <div class="brand-mark"></div>
             MediNote
           </div>
-          <div class="pill">Eine Plattform &ndash; Zwei Perspektiven</div>
+          <div class="pill" data-lang-block="de">Kompakt. Sicher. Sofort einsatzbereit.</div>
+          <div class="pill" data-lang-block="en">Compact. Secure. Ready to use.</div>
+          <div class="lang-toggle" aria-label="Sprache wechseln">
+            <button type="button" data-set-lang="de" class="active">DE</button>
+            <button type="button" data-set-lang="en">EN</button>
+          </div>
         </div>
       </header>
 
       <section class="hero">
         <div class="hero-inner">
-          <div class="reveal visible">
-            <h1>MediNote &ndash; Die digitale Gesundheitsakte der Zukunft</h1>
-            <p class="subhead">Eine Plattform. Zwei Perspektiven. Perfekt verbunden. Automatisierte Dokumentation f&uuml;r Praxen und ein pers&ouml;nlicher Gesundheits-Wallet f&uuml;r Patientinnen und Patienten.</p>
+            <div class="reveal visible">
+            <h1>
+              <span data-lang-block="de">MediNote &ndash; Gesundheitsakte ohne Ballast</span>
+              <span data-lang-block="en">MediNote &ndash; Health record without the clutter</span>
+            </h1>
+            <p class="subhead">
+              <span data-lang-block="de">Transkripte ohne Smalltalk, Befunde sortiert, Freigaben im Griff. Behandlung vor Papierkram.</span>
+              <span data-lang-block="en">Transcripts without small talk, findings sorted, sharing under control. Care first, admin later.</span>
+            </p>
             <div class="cta-row">
-              <button class="btn btn-primary" id="cta-hero">Interesse vormerken</button>
-              <a class="btn btn-ghost" href="more.html">Mehr erfahren</a>
+              <button class="btn btn-primary" id="cta-hero">
+                <span data-lang-block="de">Anmeldung zum Newsletter</span>
+                <span data-lang-block="en">Newsletter sign-up</span>
+              </button>
+              <a class="btn btn-ghost" href="more.html">
+                <span data-lang-block="de">Mehr erfahren</span>
+                <span data-lang-block="en">Learn more</span>
+              </a>
             </div>
           </div>
           <div class="hero-card reveal">
@@ -690,16 +744,34 @@
             </div>
             <div class="stat-grid">
               <div class="stat">
-                <strong>Automatische Transkripte</strong>
-                <small>Besuchsnotizen ohne Tippen &ndash; direkt in der Akte.</small>
+                <strong>
+                  <span data-lang-block="de">Relevanz auf den Punkt</span>
+                  <span data-lang-block="en">Relevance first</span>
+                </strong>
+                <small>
+                  <span data-lang-block="de">Gefilterte Transkripte, nur medizinisch Relevantes bleibt.</span>
+                  <span data-lang-block="en">Filtered transcripts; only clinically relevant content stays.</span>
+                </small>
               </div>
               <div class="stat">
-                <strong>Patienten-Wallet</strong>
-                <small>Alle Befunde und Arztbesuche in einer App.</small>
+                <strong>
+                  <span data-lang-block="de">Check-In per QR</span>
+                  <span data-lang-block="en">QR check-in</span>
+                </strong>
+                <small>
+                  <span data-lang-block="de">Freigaben per QR, Praxis hat sofort Kontext.</span>
+                  <span data-lang-block="en">Sharing via QR; context available instantly.</span>
+                </small>
               </div>
               <div class="stat">
-                <strong>QR-Code Check-In</strong>
-                <small>Schneller Empfang, weniger Wartezeit, sichere Zuordnung.</small>
+                <strong>
+                  <span data-lang-block="de">MediNote sortiert vor</span>
+                  <span data-lang-block="en">MediNote pre-sorts</span>
+                </strong>
+                <small>
+                  <span data-lang-block="de">Symptome, Diagnose, Behandlung aus dem Transkript erkannt.</span>
+                  <span data-lang-block="en">Symptoms, diagnosis, treatment flagged from the transcript.</span>
+                </small>
               </div>
             </div>
           </div>
@@ -707,75 +779,159 @@
       </section>
 
       <section class="reveal">
-        <h2 class="section-title">F&uuml;r &Auml;rztinnen &amp; Praxen</h2>
-        <p class="section-sub">Vereinfachen Sie Ihren Praxisalltag mit automatischer Dokumentation, klaren Workflows und sicherer Speicherung &ndash; entwickelt f&uuml;r moderne Teams.</p>
+        <h2 class="section-title">
+          <span data-lang-block="de">Was MediNote liefert</span>
+          <span data-lang-block="en">What MediNote delivers</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang-block="de">Kompakte Akte, klare Abl&auml;ufe, schnelle Einarbeitung.</span>
+          <span data-lang-block="en">Compact record, clear flows, quick onboarding.</span>
+        </p>
         <div class="value-grid">
           <div class="card">
-            <div class="icon">A</div>
-            <h4>Automatische Transkription &amp; Dokumentation</h4>
-            <p>Konsultationen werden live erfasst, sauber strukturiert und k&ouml;nnen sofort freigegeben werden.</p>
+            <div class="icon">K</div>
+            <h4>
+              <span data-lang-block="de">Klarer &Uuml;berblick</span>
+              <span data-lang-block="en">Clear overview</span>
+            </h4>
+            <p>
+              <span data-lang-block="de">Transkripte ohne Smalltalk, Befunde und Verl&auml;ufe geb&uuml;ndelt.</span>
+              <span data-lang-block="en">Transcripts without small talk; findings and history bundled.</span>
+            </p>
           </div>
           <div class="card">
-            <div class="icon">Q</div>
-            <h4>Patienten-Management mit QR-Code-Check-In</h4>
-            <p>Check-In am Empfang, sofortige Zuordnung zur Akte, klare Abl&auml;ufe im Team.</p>
+            <div class="icon">Z</div>
+            <h4>
+              <span data-lang-block="de">Check-in ohne Aufwand</span>
+              <span data-lang-block="en">Effortless check-in</span>
+            </h4>
+            <p>
+              <span data-lang-block="de">QR-Code am Empfang, Freigaben durch Patient:innen, Kontext sofort sichtbar.</span>
+              <span data-lang-block="en">QR at reception, patient-controlled sharing, context immediately visible.</span>
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon">F</div>
+            <h4>
+              <span data-lang-block="de">Fokus auf Behandlung</span>
+              <span data-lang-block="en">Focus on care</span>
+            </h4>
+            <p>
+              <span data-lang-block="de">MediNote zieht aus Transkripten Symptome, Diagnosepunkte, Behandlungsvorschl&auml;ge und sortiert sie nach Relevanz.</span>
+              <span data-lang-block="en">MediNote extracts symptoms, diagnosis points and treatment ideas from transcripts and ranks them.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="reveal">
+        <h2 class="section-title">
+          <span data-lang-block="de">So funktioniert es</span>
+          <span data-lang-block="en">How it works</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang-block="de">In drei Schritten zur sauberen Akte.</span>
+          <span data-lang-block="en">Three steps to a clean record.</span>
+        </p>
+        <div class="value-grid">
+          <div class="card">
+            <div class="icon">1</div>
+            <h4>
+              <span data-lang-block="de">Check-in</span>
+              <span data-lang-block="en">Check-in</span>
+            </h4>
+            <p>
+              <span data-lang-block="de">QR scannen, Freigaben setzen, Praxis sieht freigegebene Daten sofort.</span>
+              <span data-lang-block="en">Scan QR, set sharing, practice sees the data instantly.</span>
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon">2</div>
+            <h4>
+              <span data-lang-block="de">Ordnen &amp; vervollst&auml;ndigen</span>
+              <span data-lang-block="en">Organise &amp; complete</span>
+            </h4>
+            <p>
+              <span data-lang-block="de">Transkripte werden gefiltert, MediNote strukturiert Anamnese, Medikamente, Befunde.</span>
+              <span data-lang-block="en">Transcripts are filtered; MediNote structures history, meds and findings.</span>
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon">3</div>
+            <h4>
+              <span data-lang-block="de">Teilen &amp; weiterarbeiten</span>
+              <span data-lang-block="en">Share &amp; keep moving</span>
+            </h4>
+            <p>
+              <span data-lang-block="de">Sichere Weitergabe, patientenseitig einsehbar, Akte w&auml;chst automatisch.</span>
+              <span data-lang-block="en">Secure sharing, visible to patients, record grows automatically.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="reveal">
+        <h2 class="section-title">
+          <span data-lang-block="de">Sicherheit &amp; Kontrolle</span>
+          <span data-lang-block="en">Security &amp; control</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang-block="de">Datenschutz als Standard, Transparenz als Prinzip.</span>
+          <span data-lang-block="en">Privacy by default, transparency by design.</span>
+        </p>
+        <div class="value-grid">
+          <div class="card">
+            <div class="icon">D</div>
+            <h4>
+              <span data-lang-block="de">DSGVO-first</span>
+              <span data-lang-block="en">GDPR-first</span>
+            </h4>
+            <p>
+              <span data-lang-block="de">Ende-zu-Ende verschl&uuml;sselt, nachvollziehbare Zugriffe.</span>
+              <span data-lang-block="en">End-to-end encrypted, traceable access.</span>
+            </p>
           </div>
           <div class="card">
             <div class="icon">S</div>
-            <h4>Sichere Speicherung &amp; Export</h4>
-            <p>Verschl&uuml;sselte Datenhaltung mit Export in Standardformaten f&uuml;r Weitergabe und Abrechnung.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="reveal">
-        <h2 class="section-title">F&uuml;r Patientinnen &amp; Patienten</h2>
-        <p class="section-sub">Beh&auml;lt den &Uuml;berblick &uuml;ber Gesundheitsdaten, Arztbesuche und Empfehlungen &ndash; immer erreichbar, immer aktuell.</p>
-        <div class="value-grid">
-          <div class="card">
-            <div class="icon">G</div>
-            <h4>Alle Gesundheitsdaten in einer App</h4>
-            <p>Dokumente, Rezepte, Impfungen &ndash; zentral gespeichert und schnell auffindbar.</p>
+            <h4>
+              <span data-lang-block="de">Steuerbare Freigaben</span>
+              <span data-lang-block="en">Controllable sharing</span>
+            </h4>
+            <p>
+              <span data-lang-block="de">Patient:innen entscheiden, was geteilt wird &ndash; jederzeit widerrufbar.</span>
+              <span data-lang-block="en">Patients decide what is shared &ndash; revocable anytime.</span>
+            </p>
           </div>
           <div class="card">
-            <div class="icon">B</div>
-            <h4>&Uuml;bersicht &uuml;ber Befunde &amp; Arztbesuche</h4>
-            <p>Chronologische Timeline mit wichtigen Details und Erinnerungen.</p>
-          </div>
-          <div class="card">
-            <div class="icon">R</div>
-            <h4>Intelligente Empfehlungen</h4>
-            <p>Hinweise zu Vorsorge, Medikamenteneinnahme und anstehenden Terminen.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="reveal">
-        <h2 class="section-title">Das Produkt in zwei Ansichten</h2>
-        <p class="section-sub">MediNote verbindet Praxis-Workflows mit dem pers&ouml;nlichen Gesundheits-Wallet. Minimalistisches Interface, klare Priorit&auml;ten, Apple-inspirierte &Auml;sthetik.</p>
-        <div class="product-grid">
-          <div class="product-card">
-            <div class="tag">Praxis-Ansicht</div>
-            <h3>MediNote f&uuml;r Praxen</h3>
-            <p>Automatische Dokumentation, strukturierte Patientendossiers und ein Frontdesk-Flow mit QR-Code-Check-In.</p>
-            <div class="media" aria-label="Produktvisualisierung Praxen"></div>
-          </div>
-          <div class="product-card">
-            <div class="tag">Patienten-Ansicht</div>
-            <h3>MediNote f&uuml;r Patienten</h3>
-            <p>Pers&ouml;nlicher Gesundheits-Wallet, Befunde, Arztbesuche und Empfehlungen &ndash; sicher gespeichert und sofort griffbereit.</p>
-            <div class="media" aria-label="Produktvisualisierung Patienten"></div>
+            <div class="icon">T</div>
+            <h4>
+              <span data-lang-block="de">Transparente Zugriffe</span>
+              <span data-lang-block="en">Transparent access</span>
+            </h4>
+            <p>
+              <span data-lang-block="de">Jede Freigabe bleibt nachvollziehbar, Zugriffe sind klar protokolliert.</span>
+              <span data-lang-block="en">Every share is traceable; access is clearly logged.</span>
+            </p>
           </div>
         </div>
       </section>
 
       <section class="contact reveal">
-        <h2 class="section-title">Kontakt &amp; Validierung</h2>
-        <p class="section-sub">MediNote befindet sich aktuell in Entwicklung. Trage dich ein, um benachrichtigt zu werden.</p>
+        <h2 class="section-title">
+          <span data-lang-block="de">Kontakt &amp; Validierung</span>
+          <span data-lang-block="en">Contact &amp; validation</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang-block="de">MediNote entsteht jetzt. Kurz eintragen, wir melden uns.</span>
+          <span data-lang-block="en">MediNote is in the making. Drop your email, we’ll reach out.</span>
+        </p>
         <form id="notify-form" action="https://formsubmit.co/info.medinote@gmail.com" method="POST">
           <input type="hidden" name="_captcha" value="false">
           <input type="email" name="email" placeholder="E-Mail-Adresse" required aria-label="E-Mail-Adresse">
-          <button class="btn btn-primary" type="submit">Interesse vormerken</button>
+          <button class="btn btn-primary" type="submit" id="cta-submit">
+            <span data-lang-block="de">Anmelden</span>
+            <span data-lang-block="en">Sign up</span>
+          </button>
         </form>
         <div id="form-message" class="form-status" aria-live="polite"></div>
       </section>
@@ -785,13 +941,63 @@
           <div class="brand">
             <div class="brand-mark"></div>MediNote
           </div>
-          <div>Datenschutz &ndash; <a href="mailto:info.medinote@gmail.com">info.medinote@gmail.com</a></div>
+          <div>
+            <span data-lang-block="de">Datenschutz</span>
+            <span data-lang-block="en">Privacy</span>
+            &ndash;
+            <a href="mailto:info.medinote@gmail.com">info.medinote@gmail.com</a>
+          </div>
         </div>
       </footer>
     </div>
   </div>
 
   <script>
+    const langCopy = {
+      de: {
+        sending: 'Wird gesendet ...',
+        success: 'Danke! Wir melden uns, sobald MediNote verf&uuml;gbar ist.',
+        error: 'Da ist etwas schiefgelaufen. Bitte versuche es sp&auml;ter erneut.',
+        placeholder: 'E-Mail-Adresse'
+      },
+      en: {
+        sending: 'Sending ...',
+        success: 'Thanks! We’ll reach out as soon as MediNote is ready.',
+        error: 'Something went wrong. Please try again later.',
+        placeholder: 'Email address'
+      }
+    };
+
+    const langButtons = document.querySelectorAll('[data-set-lang]');
+    const form = document.getElementById('notify-form');
+    const message = document.getElementById('form-message');
+    const submitBtn = document.getElementById('cta-submit');
+    const emailInput = form.querySelector('input[type="email"]');
+
+    const setSubmitLabel = (lang, sending = false) => {
+      const labels = {
+        de: sending ? 'Wird gesendet...' : 'Anmelden',
+        en: sending ? 'Sending...' : 'Sign up'
+      };
+      submitBtn.textContent = labels[lang] || labels.en;
+    };
+
+    const applyLang = (lang) => {
+      document.documentElement.setAttribute('data-lang', lang);
+      document.documentElement.lang = lang;
+      localStorage.setItem('medinote-lang', lang);
+      langButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.setLang === lang));
+      if (emailInput) emailInput.placeholder = langCopy[lang]?.placeholder || emailInput.placeholder;
+      if (submitBtn) setSubmitLabel(lang, submitBtn.disabled);
+    };
+
+    const currentLang = localStorage.getItem('medinote-lang') || 'de';
+    applyLang(currentLang);
+
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => applyLang(btn.dataset.setLang));
+    });
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -803,10 +1009,6 @@
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    const form = document.getElementById('notify-form');
-    const message = document.getElementById('form-message');
-    const submitBtn = form.querySelector('button[type="submit"]');
-
     const setStatus = (variant, text) => {
       message.className = `form-status ${variant}`.trim();
       message.innerHTML = `<span class="status-icon" aria-hidden="true"></span><span>${text}</span>`;
@@ -815,9 +1017,10 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      setStatus('sending', 'Wird gesendet ...');
+      const lang = document.documentElement.getAttribute('data-lang') || 'de';
+      setStatus('sending', langCopy[lang]?.sending || 'Sending...');
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Wird gesendet...';
+      setSubmitLabel(lang, true);
 
       try {
         const response = await fetch(form.action, {
@@ -828,13 +1031,13 @@
 
         if (!response.ok) throw new Error('Request failed');
 
-        setStatus('success', 'Danke! Wir melden uns, sobald MediNote verf&uuml;gbar ist.');
+        setStatus('success', langCopy[lang]?.success || 'Thanks! We will get back to you soon.');
         form.reset();
       } catch (error) {
-        setStatus('error', 'Da ist etwas schiefgelaufen. Bitte versuche es sp&auml;ter erneut.');
+        setStatus('error', langCopy[lang]?.error || 'Something went wrong. Please try again.');
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Interesse vormerken';
+        setSubmitLabel(lang, false);
       }
     });
 
